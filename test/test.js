@@ -60,7 +60,7 @@ describe('POST', () => {
             .set('Authorization', `Bearer ${process.env.TOKEN}`)
             .set('Access', 'application/json')
             .expect('Content-Type', /json/)
-            .expect(201)
+            .expect(200)
     });
 
     it('Register without login or password', async () => {

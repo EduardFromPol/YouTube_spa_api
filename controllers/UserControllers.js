@@ -23,7 +23,7 @@ class UserControllers {
                 return { message: 'invalid token' };
             }
         } else { 
-            return null
+            return null;
         }
     };
 
@@ -36,7 +36,7 @@ class UserControllers {
                 login, 
                 password: hashPass
             });
-            return createdUser
+            return createdUser;
         } return null;
     };
 

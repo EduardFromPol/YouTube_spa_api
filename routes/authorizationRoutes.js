@@ -43,6 +43,7 @@ const validation = [
 router.post("/login", validation, async (req, res) => {
   try {
     const { login, password } = req.body;
+    console.log(req.body);
     UserControllers.login(login, password).then((token) => {
       if (token === null) res.json("invalid token");
       res.send(token);
@@ -84,7 +85,6 @@ router.post("/register", validation, async (req, res) => {
     UserControllers.register(login, password).then((createdUser) => {
       // if (createdUser === null) res.json("This login is alreadi in used");
       if (createdUser === null) res.sendStatus(400);
-      res.status(201);
       res.send(createdUser);
     });
   } catch (error) {
