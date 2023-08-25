@@ -1,6 +1,6 @@
 // const fs = require('fs');
 // const AuthModel = require('../models/authModel.js');
-const Auth = require('../models/_models.js');
+const { Auth } = require('../models/_models.js');
 
 class UserServices {
 
@@ -11,9 +11,10 @@ class UserServices {
     }
 
     async findUserByLogin(login) {
+        console.log(login);
         return new Promise((res, rej) => {
 
-            Auth.findOne({ where: {login} }).then(data => {
+            Auth.findOne({ where: { login: login } }).then(data => {
                 res(data)
             });
 

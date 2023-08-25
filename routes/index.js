@@ -1,9 +1,15 @@
 const router = require('express').Router();
 
-const authorization = require('./authorization.js');
-router.use('/authorization', authorization);
+const authorizationRoutes = require('./authorizationRoutes.js');
+router.use('/authorization', authorizationRoutes);
 
-const youtube = require('./youtube.js');
-router.use('/youtube', youtube);
+const youtubeRoutes = require('./youtubeRoutes.js');
+router.use('/youtube', youtubeRoutes);
+
+const searchListRoutes = require('./searchListRoutes.js');
+router.use('/searchList', searchListRoutes);
+
+const favoritesRoutes = require('./favoritesRoutes.js');
+router.use('/favorites', favoritesRoutes);
 
 module.exports = router;
