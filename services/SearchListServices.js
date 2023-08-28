@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { SearchList } = require('../models/_models.js');
 
 class SearchListServices {
@@ -21,16 +20,4 @@ class SearchListServices {
     
 };
 
-=======
-const { SearchList } = require('../models/_models.js');
-
-class SearchListServices {
-    async getList() {
-        return new Promise((res, rej) => {
-            SearchList.findAll().then(data => res(data));
-        });
-    };
-};
-
->>>>>>> 2e349abcf48689852b1d88a3f475f7cc0c30b15a
 module.exports = new SearchListServices();
