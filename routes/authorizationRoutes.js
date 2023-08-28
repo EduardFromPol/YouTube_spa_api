@@ -4,15 +4,10 @@ const { check, validationResult } = require('express-validator');
 
 
 
-
-
 const validation = [
   check('login', 'Invalid Login').isLength({min: 5, max: 12}),
   check('password', 'Invalid Password').isLength({min: 6, max: 20})
 ]
-
-
-
 
 
 
@@ -43,7 +38,6 @@ const validation = [
 router.post("/login", validation, async (req, res) => {
   try {
     const { login, password } = req.body;
-    console.log(req.body);
     UserControllers.login(login, password).then((token) => {
       if (token === null) res.json("invalid token");
       res.send(token);
@@ -52,6 +46,7 @@ router.post("/login", validation, async (req, res) => {
     res.json(error);
   }
 });
+
 
 /**
  * @swagger
@@ -83,7 +78,6 @@ router.post("/register", validation, async (req, res) => {
     validationResult(req).throw();
     const { login, password } = req.body;
     UserControllers.register(login, password).then((createdUser) => {
-      // if (createdUser === null) res.json("This login is alreadi in used");
       if (createdUser === null) res.sendStatus(400);
       res.send(createdUser);
     });

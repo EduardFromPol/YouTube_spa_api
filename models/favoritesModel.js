@@ -3,7 +3,7 @@ const pgDb = require('../config/db.js');
 const Auth = require('./authModel.js');
 
 const Favorites = pgDb.define(
-    'favorite',
+    'favorite_list',
     {
         id: {
             type: DataTypes.INTEGER,
@@ -14,7 +14,6 @@ const Favorites = pgDb.define(
         search: {
             type: DataTypes.STRING,
             allowNull: false,
-            require: true
         },
         authuser_id: {
             type: DataTypes.INTEGER,

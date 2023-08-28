@@ -2,6 +2,8 @@ require('dotenv').config();
 const request = require('supertest');
 const app = require('../server.js');
 
+let testUserId;
+
 describe('GET', () => {
     it('Get all users', async () => {
         const response = await request(app)
@@ -36,7 +38,7 @@ describe('GET', () => {
 describe('POST', () => {
     it('Login', async () => {
         const user = {
-            "login": "ibadt",
+            "login": "ibadt1",
             "password": "12345678"
         }
         await request(app)
@@ -51,7 +53,7 @@ describe('POST', () => {
 
     it('Register', async () => {
         const user = {
-            "login": "test1",
+            "login": "test12",
             "password": "testtest"
         };
         await request(app)
@@ -73,5 +75,16 @@ describe('POST', () => {
             .set('Authorization', `Bearer ${process.env.TOKEN}`)
             .set('Access', 'application/json')
             .expect(400)
+    });
+});
+
+
+describe('DELETE', () => {
+    it('DELETE test user', async () => {
+        await request(app)
+            .delete('/api/youtube/deleteUser')
+            .set('Authorization', `Bearer ${process.env.TOKEN}`)
+            .set('Access', 'application/json')
+            .expect(200)
     })
 })

@@ -14,7 +14,7 @@ const SearchList = pgDb.define(
         search: {
             type: DataTypes.STRING,
             allowNull: false,
-            require: true
+
         },
         authuser_id: {
             type: DataTypes.INTEGER,
@@ -22,7 +22,7 @@ const SearchList = pgDb.define(
             require: true,
             references: {
                 model: Auth,
-                key: 'id'
+                key: "id"
             }
         }
     }

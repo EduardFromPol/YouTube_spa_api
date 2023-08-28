@@ -43,7 +43,8 @@ class UserControllers {
     async deleteUser(id) {
         const deletedUser = await UserServices.deleteUser(id);
         return deletedUser;
-    }
+    };
+    
 };
 
 module.exports = new UserControllers();

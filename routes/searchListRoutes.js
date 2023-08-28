@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { SearchList } = require('../models/_models.js');
-// const SearchListController = require('../controllers/SearchListController.js');
+const SearchListController = require('../controllers/SearchListController.js');
 const validation = require('../helpers/validation.js');
 
 
@@ -22,9 +22,9 @@ const validation = require('../helpers/validation.js');
 
 router.get('/', validation, async (req, res) => {
     try {
-        SearchList.findAll({ where: { id: userId }}).then(data => res.send(data));
-        // const searchList = await SearchListController.getList();
-        // res.send(searchList);
+
+        const { id } = req.userId;
+        SearchListController.getList(id).then(data => res.send(data));
     } catch (error) {
         res.json(error);
     };
@@ -59,10 +59,10 @@ router.get('/', validation, async (req, res) => {
 
 router.post('/create', validation, async (req, res) => {
     try {
-        const obj = {search: req.body.search, authuser_id: req.userId.id}
-        // console.log(obj);
-        SearchList.create(obj).then(data => res.send(data));
-        // SearchListController.createList(req.body).then(data => res.send(data));
+        const { search } = req.body;
+        const { id } = req.userId;
+        const obj = { search, authuser_id: id};
+        SearchListController.createList(obj).then(data => res.send(data));
     } catch (error) {
         res.json(error);
     }

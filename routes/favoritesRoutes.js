@@ -1,10 +1,6 @@
 const router = require('express').Router();
-const { Favorites } = require('../models/_models.js');
+const FavoritesController = require('../controllers/FavoritesController.js');
 const validation = require('../helpers/validation.js');
-
-
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjkyNjQxNjIzfQ.hnZuQWHFUMtajR2H7tadT-dIR5N8kHt8hutfKEOel-s
-
 
 
 /**
@@ -25,7 +21,7 @@ const validation = require('../helpers/validation.js');
 
 router.get('/', validation, async (req, res) => {
     try {
-        Favorites.findAll({ where: {}}).then(data => res.send(data));
+        FavoritesController.getAllFavorites().then(data => res.send(data));
     } catch (error) {
         res.json(error);
     };
@@ -49,8 +45,6 @@ router.get('/', validation, async (req, res) => {
  *             properties:
  *               search:
  *                 type: string
- *               authuser_id:
- *                 type: integer
  *     responses:
  *       '200':
  *         description: Seccess
@@ -62,7 +56,10 @@ router.get('/', validation, async (req, res) => {
 
 router.post('/create', validation, async (req, res) => {
     try {
-        Favorites.create(req.body).then(data => res.send(data));
+        const { search } = req.body;
+        const { id } = req.userId;
+        const obj = { search, authuser_id: req.userId.id };
+        FavoritesController.createFavorite(obj).then(data => res.send(data));
     } catch (error) {
         res.json(error);
     }
