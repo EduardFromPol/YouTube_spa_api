@@ -1,8 +1,8 @@
 require('dotenv').config();
 const request = require('supertest');
-const app = require('../server.js');
+const app = require('../api/server.js');
 
-let testUserId;
+
 
 describe('GET', () => {
     it('Get all users', async () => {
