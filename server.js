@@ -22,6 +22,12 @@ const options = {
             server: ['https://youtube-spa-api.vercel.app/'],
             version: '1.0.0'
         },
+        servers: [
+            {
+              url: "https://youtube-spa-api.vercel.app/",
+              description: "My API Documentation",
+            },
+        ],
         components: {
             securitySchemes: {
                 bearerAuth: {
