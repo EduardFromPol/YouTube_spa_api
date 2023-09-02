@@ -9,6 +9,12 @@ app.use(express.json());
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
+
+app.use('/', (req, res) => {
+    res.json({ message: "hello from vercel"});
+})
+
+
 const options = {
     definition: {
         openapi: '3.0.0',
@@ -37,7 +43,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 const routes = require('./routes/index.js');
 app.use('/api', routes);
 
-app.listen(process.env.PORT, () => console.log('Server is started...'));
+app.listen(process.env.PORT || 3000, () => console.log('Server is started...'));
 
 
 module.exports = app;
