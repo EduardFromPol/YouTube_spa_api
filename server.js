@@ -4,8 +4,8 @@ const app = express();
 
 
 
-app.use('/', (req, res) => {
-    res.json({ message: "hello from vercel"});
+app.get('/', (req, res) => {
+    res.send('Hello World!');
 });
 
 
