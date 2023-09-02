@@ -34,7 +34,7 @@ const swaggerDocs = swaggerJsDoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
-const routes = require('../routes/index.js');
+const routes = require('./routes/index.js');
 app.use('/api', routes);
 
 app.listen(process.env.PORT, () => console.log('Server is started...'));
