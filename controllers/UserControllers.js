@@ -11,12 +11,12 @@ class UserControllers {
         return users;
     }
 
-    async login(login, password) {
-        const finderUser = await UserServices.findUserByLogin(login);
+    async login( login, password ) {
+        const finderUser = await UserServices.findUserByLogin( login );
         const id = finderUser.id;
         if(finderUser) {
-            const comparePass = await bcrypt.compare(password, finderUser.password);
-            if(comparePass) {
+            const comparePass = await bcrypt.compare( password, finderUser.password );
+            if( comparePass ) {
                 const token = jwt.sign({ id }, process.env.SECRET_ACCESS_TOKEN);
                 return token;
             } else {
@@ -27,11 +27,11 @@ class UserControllers {
         }
     };
 
-    async register(login, password) {
-        const finderUser = await UserServices.findUserByLogin(login);
+    async register( login, password ) {
+        const finderUser = await UserServices.findUserByLogin( login );
         if(!finderUser) {
             const salt = await bcrypt.genSalt(10);
-            const hashPass = await bcrypt.hash(password, salt);
+            const hashPass = await bcrypt.hash( password, salt );
             const createdUser = await UserServices.createUser({
                 login, 
                 password: hashPass
@@ -40,8 +40,8 @@ class UserControllers {
         } return null;
     };
 
-    async deleteUser(id) {
-        const deletedUser = await UserServices.deleteUser(id);
+    async deleteUser( id ) {
+        const deletedUser = await UserServices.deleteUser( id );
         return deletedUser;
     };
     

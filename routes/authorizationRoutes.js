@@ -5,8 +5,8 @@ const { check, validationResult } = require('express-validator');
 
 
 const validation = [
-  check('login', 'Invalid Login').isLength({min: 5, max: 12}),
-  check('password', 'Invalid Password').isLength({min: 6, max: 20})
+  check('login', 'Invalid Login').isLength({ min: 5, max: 12 }),
+  check('password', 'Invalid Password').isLength({ min: 6, max: 20 })
 ]
 
 
@@ -38,12 +38,12 @@ const validation = [
 router.post("/login", validation, async (req, res) => {
   try {
     const { login, password } = req.body;
-    UserControllers.login(login, password).then((token) => {
-      if (token === null) res.json("invalid token");
-      res.send(token);
+    UserControllers.login( login, password ).then(( token ) => {
+      if ( token === null ) res.json("invalid token");
+      res.send( token );
     });
-  } catch (error) {
-    res.json(error);
+  } catch ( error ) {
+    res.json( error );
   }
 });
 
@@ -75,11 +75,11 @@ router.post("/login", validation, async (req, res) => {
 
 router.post("/register", validation, async (req, res) => {
   try {
-    validationResult(req).throw();
+    validationResult( req ).throw();
     const { login, password } = req.body;
-    UserControllers.register(login, password).then((createdUser) => {
-      if (createdUser === null) res.sendStatus(400);
-      res.send(createdUser);
+    UserControllers.register(login, password).then(( createdUser ) => {
+      if ( createdUser === null ) res.sendStatus(400);
+      res.send( createdUser );
     });
   } catch (error) {
     res.status(400);

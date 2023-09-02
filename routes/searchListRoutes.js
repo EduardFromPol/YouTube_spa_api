@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { SearchList } = require('../models/_models.js');
 const SearchListController = require('../controllers/SearchListController.js');
 const validation = require('../helpers/validation.js');
 

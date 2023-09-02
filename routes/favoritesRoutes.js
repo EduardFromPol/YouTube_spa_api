@@ -58,7 +58,7 @@ router.post('/create', validation, async (req, res) => {
     try {
         const { search } = req.body;
         const { id } = req.userId;
-        const obj = { search, authuser_id: req.userId.id };
+        const obj = { search, authuser_id: id };
         FavoritesController.createFavorite(obj).then(data => res.send(data));
     } catch (error) {
         res.json(error);
