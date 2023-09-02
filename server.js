@@ -19,11 +19,7 @@ const options = {
         openapi: '3.0.0',
         info: {
             title: 'User API',
-            server: ['http://localhost:3000', 
-                     'https://youtube-spa-api.vercel.app', 
-                     'https://youtube-spa-pcyhw1l6v-ibadt.vercel.app',
-                     'https://youtube-spa-pcyhw1l6v-ibadt.vercel.app'
-                    ],
+            server: ['https://youtube-spa-api.vercel.app'],
             version: '1.0.0'
         },
         components: {
