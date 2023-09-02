@@ -3,6 +3,14 @@ const express = require('express');
 const app = express();
 
 
+
+app.use('/', (req, res) => {
+    res.json({ message: "hello from vercel"});
+});
+
+
+
+
 app.use(express.json());
 
 
@@ -10,9 +18,6 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 
-app.use('/', (req, res) => {
-    res.json({ message: "hello from vercel"});
-})
 
 
 const options = {
