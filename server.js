@@ -21,7 +21,7 @@ const options = {
         openapi: '3.0.0',
         info: {
             title: 'User API',
-            server: ['https://long-blue-chameleon-toga.cyclic.app'],
+            server: ['https://cheerful-top-coat-lion.cyclic.app'],
             version: '1.0.0'
         },
         components: {
