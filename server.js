@@ -48,7 +48,7 @@ const options = {
     apis: ["routes/*.js"]
 };
 const swaggerDocs = swaggerJsDoc(options);
-app.use('/api-docs', swaggerUi.serve, swaggerUI.setup(specs, { customCssUrl: CSS_URL }));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, { customCssUrl: CSS_URL }));
 
 
 const routes = require('./routes/index.js');
