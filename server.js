@@ -19,7 +19,7 @@ const options = {
         openapi: '3.0.0',
         info: {
             title: 'User API',
-            server: ['http://localhost:3000'],
+            server: ['https://youtubeapi-1q99.onrender.com'],
             version: '1.0.0'
         },
         components: {
