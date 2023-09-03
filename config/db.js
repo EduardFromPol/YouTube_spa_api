@@ -1,5 +1,4 @@
 require('dotenv').config();
-const pg = require('pg');
 const Sequelize = require('sequelize');
 
 const pgDb = new Sequelize(
@@ -9,7 +8,6 @@ const pgDb = new Sequelize(
     {
         host: 'localhost', 
         dialect: 'postgres',
-        dialectModule: pg
     }
 );
 
