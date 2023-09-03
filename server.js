@@ -25,7 +25,7 @@ const options = {
         openapi: '3.0.0',
         info: {
             title: 'User API',
-            server: ['https://tasty-fawn-neckerchief.cyclic.app'],
+            server: ['http://localhost:3000'],
             version: '1.0.0'
         },
         components: {
