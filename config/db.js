@@ -6,7 +6,7 @@ const pgDb = new Sequelize(
     'postgres', 
     'admin', 
     {
-        host: 'localhost', 
+        host: 'youtubeapi-1q99.onrender.com', 
         dialect: 'postgres',
     }
 );
