@@ -82,7 +82,6 @@ router.post("/register", validation, async (req, res) => {
       res.send( createdUser );
     });
   } catch (error) {
-    res.status(400);
     res.json(error);
   }
 });
