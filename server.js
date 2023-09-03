@@ -14,6 +14,17 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 
+
+//
+const cors = require('cors');
+
+const CSS_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+
+app.use(cors());
+
+//
+
 const options = {
     definition: {
         openapi: '3.0.0',
@@ -37,7 +48,7 @@ const options = {
     apis: ["routes/*.js"]
 };
 const swaggerDocs = swaggerJsDoc(options);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api-docs', swaggerUi.serve, swaggerUI.setup(swaggerDocs, { customCssUrl: CSS_URL }));
 
 
 const routes = require('./routes/index.js');
