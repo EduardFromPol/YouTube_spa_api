@@ -1,11 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-
+const cors = require('cors');
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+
+
+app.use(cors());
 
 
 app.use(express.json());
@@ -19,7 +22,7 @@ const options = {
         openapi: '3.0.0',
         info: {
             title: 'User API',
-            server: ['https://youtubeapi-1q99.onrender.com'],
+            server: ['http://localhost:3000'],
             version: '1.0.0'
         },
         components: {
@@ -42,7 +45,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 const routes = require('./routes/index.js');
 app.use('/api', routes);
 
-app.listen(process.env.PORT || 3000, () => console.log('Server is started...'));
+app.listen(process.env.PORT, () => console.log('Server is started...'));
 
 
 module.exports = app;
