@@ -2,30 +2,9 @@ require('dotenv').config();
 const router = require('express').Router();
 const UserControllers = require('../controllers/UserControllers.js');
 const validation = require('../helpers/validation.js')
-const postgres = require('../config/db.js');
+// const postgres = require('../config/db.js');
 
 
-
-/**
- * @swagger
- * /api/youtube:
- *   get:
- *     summary: TEST
- *     description: TEST
- *     tags: [TEST]
- *     responses:
- *       '200':
- *         description: Seccess
- */
-
-router.get('/', async (req, res) => {
-    try {
-        const data = await postgres.query('SELECT * FROM auth_users');
-        res.send(data.rows);
-    } catch (error) {
-        res.json(error);
-    }
-})
 
 
 
@@ -48,11 +27,11 @@ router.get('/', async (req, res) => {
 
 router.get('/users', validation, async (req, res) => {
     try {
-        // const users = await UserControllers.allUsers();
-        // res.send(users);
+        const users = await UserControllers.allUsers();
+        res.send(users);
 
-        const users = await postgres.query('SELECT * FROM auth_users');
-        res.send(users.rows);
+        // const users = await postgres.query('SELECT * FROM auth_users');
+        // res.send(users.rows);
 
     } catch (error) {
         res.json(error);
@@ -106,11 +85,11 @@ router.get('/', validation, (req, res) => {
 router.delete('/deleteUser', validation, async (req, res) => {
     try {
         const { id } = req.userId;
-        // const deletedUser = await UserControllers.deleteUser(id);
-        // res.send(deletedUser);
+        const deletedUser = await UserControllers.deleteUser(id);
+        res.send(deletedUser);
 
-        const { rows } = await postgres.query('DELETE FROM auth_users WHERE id=$1 RETURNING *', [id]);
-        res.send(rows);
+        // const { rows } = await postgres.query('DELETE FROM auth_users WHERE id=$1 RETURNING *', [id]);
+        // res.send(rows);
 
     } catch (error) {
         res.json(error);

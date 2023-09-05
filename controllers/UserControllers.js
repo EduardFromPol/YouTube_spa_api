@@ -2,7 +2,7 @@ require('dotenv').config();
 const UserServices = require('../services/UserServices.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const postgres = require('../config/db.js');
+// const postgres = require('../config/db.js');
 
 
 class UserControllers {
@@ -13,14 +13,11 @@ class UserControllers {
     }
 
     async login( login, password ) {
-        
-        // const createdUser = await postgres.query('INSERT INTO auth_users (login, password) values ($1, $2) RETURNING *', 
-        // [login, password]);
 
         const finderUser = await UserServices.findUserByLogin( login );
-        const id = finderUser[0].id;
         if(finderUser) {
-            const comparePass = await bcrypt.compare( password, finderUser[0].password );
+            const id = finderUser.dataValues.id;
+            const comparePass = await bcrypt.compare( password, finderUser.dataValues.password );
             if( comparePass ) {
                 const token = jwt.sign({ id }, process.env.SECRET_ACCESS_TOKEN);
                 return token;
@@ -30,27 +27,28 @@ class UserControllers {
         } else { 
             return null;
         }
+
     };
 
     async register( login, password ) {
-        const finderUser = await UserServices.findUserByLogin( login );
-        const date = new Date();
-        
 
-        if(!finderUser[0]) {
+        const finderUser = await UserServices.findUserByLogin( login );        
+// console.log(finderUser);
+        if(!finderUser) {
             const salt = await bcrypt.genSalt(10);
             const hashPass = await bcrypt.hash( password, salt );
-            // const createdUser = await UserServices.createUser({
-            //     login, 
-            //     password: hashPass
-            // });
-            // return createdUser;
+            const createdUser = await UserServices.createUser({
+                login, 
+                password: hashPass
+            });
+            return createdUser;
             
-            const { rows } = await postgres.query('INSERT INTO auth_users (login, password) values ($1, $2) RETURNING *',
-                [login, hashPass]  
-            );
-            return (rows[0]);
+            // const { rows } = await postgres.query('INSERT INTO auth_users (login, password) values ($1, $2) RETURNING *',
+            //     [login, hashPass]  
+            // );
+            // return (rows[0]);
         } return null;
+        
     };
 
     async deleteUser( id ) {
