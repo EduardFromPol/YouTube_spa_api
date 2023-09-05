@@ -42,6 +42,12 @@ router.post("/login", validation, async (req, res) => {
       if ( token === null ) res.json("invalid token");
       res.send( token );
     });
+
+    // const createdUser = await postgres.query('INSERT INTO auth_users (login, password) values ($1, $2) RETURNING *', 
+    //   [login, password]);
+
+    // res.send(createdUser);
+
   } catch ( error ) {
     res.json( error );
   }
@@ -78,9 +84,12 @@ router.post("/register", validation, async (req, res) => {
     validationResult( req ).throw();
     const { login, password } = req.body;
     UserControllers.register(login, password).then(( createdUser ) => {
+      console.log(createdUser);
       if ( createdUser === null ) res.sendStatus(400);
+      // if ( createdUser === null ) res.status(400).send();
       res.send( createdUser );
     });
+
   } catch (error) {
     res.json(error);
   }

@@ -22,6 +22,7 @@ const validation = require('../helpers/validation.js');
 router.get('/', validation, async (req, res) => {
     try {
         FavoritesController.getAllFavorites().then(data => res.send(data));
+
     } catch (error) {
         res.json(error);
     };

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Sequelize = require('sequelize');
+const { Pool } = require('pg')
 
 // const pgDb = new Sequelize(
 //     'youtubespa', 
@@ -11,7 +12,23 @@ const Sequelize = require('sequelize');
 //     }
 // );
 
-const pgDb = new Sequelize(process.env.POSTGRES_CONNECT_URL);
+// const pgDb = new Sequelize(process.env.POSTGRES_CONNECT_URL);
+
+// module.exports = pgDb;
 
 
-module.exports = pgDb;
+const postgres = new Pool({
+    user: 'postgres',
+    password: 'admin',
+    port: 5432,
+    host: 'localhost',
+    database: 'youtubespa'
+    // connectionString: process.env.POSTGRES_CONNECT_URL + "?sslmode=require"
+});
+
+postgres.connect(err => {
+    if(err) throw err;
+    console.log('Postgres connected...');
+});
+
+module.exports = postgres;
