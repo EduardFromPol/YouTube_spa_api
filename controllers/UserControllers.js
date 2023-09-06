@@ -8,8 +8,9 @@ const postgres = require('../config/db.js');
 class UserControllers {
 
     async allUsers() {
-        const users = await UserServices.allUsers();
-        return users;
+        // const users = await UserServices.allUsers();
+        const { rows } = await postgres.query('SELECT * FROM auth_users');
+        return rows;
     }
 
     async login( login, password ) {
@@ -33,20 +34,14 @@ class UserControllers {
     async register( login, password ) {
 
         const finderUser = await UserServices.findUserByLogin( login );      
-        if(finderUser.length < 1) {
+        if(!finderUser) {
             const salt = await bcrypt.genSalt(10);
             const hashPass = await bcrypt.hash( password, salt );
-            // const createdUser = await UserServices.createUser({
-            //     login, 
-            //     password: hashPass
-            // });
-            // return createdUser;
-            
-            const { rows } = await postgres.query(
-                'INSERT INTO auth_users (login, password) values ($1, $2) RETURNING *',
-                [login, hashPass]  
-            );
-            return (rows[0]);
+            const createdUser = await UserServices.createUser({
+                login, 
+                password: hashPass
+            });
+            return createdUser;
         } return null;
         
     };

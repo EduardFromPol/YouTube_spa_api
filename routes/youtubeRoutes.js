@@ -27,11 +27,11 @@ const postgres = require('../config/db.js');
 
 router.get('/users', validation, async (req, res) => {
     try {
-        // const users = await UserControllers.allUsers();
-        // res.send(users);
+        const users = await UserControllers.allUsers();
+        res.send(users);
 
-        const users = await postgres.query('SELECT * FROM auth_users');
-        res.send(users.rows);
+        // const users = await postgres.query('SELECT * FROM auth_users');
+        // res.send(users.rows);
 
     } catch (error) {
         res.json(error);
@@ -87,9 +87,6 @@ router.delete('/deleteUser', validation, async (req, res) => {
         const { id } = req.userId;
         const deletedUser = await UserControllers.deleteUser(id);
         res.send(deletedUser);
-
-        // const { rows } = await postgres.query('DELETE FROM auth_users WHERE id=$1 RETURNING *', [id]);
-        // res.send(rows);
 
     } catch (error) {
         res.json(error);

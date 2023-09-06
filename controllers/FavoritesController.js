@@ -7,8 +7,8 @@ class FavoritesController {
         return favorites;
     };
 
-    async createFavorite( obj ) {
-        const createdFavorite = await FavoritesServices.createFavorite( obj );
+    async createFavorite( search, id ) {
+        const createdFavorite = await FavoritesServices.createFavorite( search, id );
         return createdFavorite;
     };
 

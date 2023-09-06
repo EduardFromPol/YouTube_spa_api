@@ -60,8 +60,8 @@ router.post('/create', validation, async (req, res) => {
     try {
         const { search } = req.body;
         const { id } = req.userId;
-        const obj = { search, authuser_id: id};
-        SearchListController.createList(obj).then(data => res.send(data));
+        // const obj = { search, authuser_id: id};
+        SearchListController.createList(search, id).then(data => res.send(data));
     } catch (error) {
         res.json(error);
     }
