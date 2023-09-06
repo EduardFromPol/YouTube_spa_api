@@ -85,7 +85,8 @@ router.post("/register", validation, async (req, res) => {
     const { login, password } = req.body;
     UserControllers.register(login, password).then(( createdUser ) => {  
       if ( createdUser === null ) {
-        res.sendStatus(400);
+        // res.sendStatus(400);
+        res.status(400).send('Bad Request');
       } else {
         res.send( createdUser );
       }

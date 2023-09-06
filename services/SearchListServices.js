@@ -7,11 +7,11 @@ class SearchListServices {
         return new Promise( async (res, rej) => {
 
             // SearchList.findAll({ where: { authuser_id: id } }).then(data => res(data));
-            const allLists = await postgres.query(
-                'SELECT * FROM search_lists WHERE id = $1', 
+            const { rows } = await postgres.query(
+                'SELECT * FROM search_lists WHERE authuser_id = $1', 
                 [id]
             )
-            res(allLists);
+            res(rows);
 
         });
     };
@@ -21,11 +21,11 @@ class SearchListServices {
 
             // SearchList.create(obj).then(data => res(data));
 
-            const createdList = await postgres.query(
+            const { rows } = await postgres.query(
                 'INSERT INTO search_lists (search, authuser_id) VALUES ($1, $2) RETURNING *',
                 [search, id]
             )
-            res(createdList);
+            res(rows[0]);
         })
     };
     

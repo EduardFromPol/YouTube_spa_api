@@ -6,9 +6,9 @@ class FavoritesServices {
     async getAllFavorites() {
         return new Promise(async (res, rej) => {
 
-            Favorites.findAll({ where: {}}).then(data => res(data));
-            const favorites = await postgres.query('SELECT * FROM favorite_lists');
-            res(favorites); 
+            // Favorites.findAll({ where: {}}).then(data => res(data));
+            const { rows } = await postgres.query('SELECT * FROM favorite_lists');
+            res(rows); 
         })
     };
 
@@ -16,11 +16,11 @@ class FavoritesServices {
         return new Promise(async (res, rej) => {
 
             // Favorites.create(obj).then(data => res(data));
-            const createdFavorite = await postgres.query(
-                'INSERT INTO favorite_lists (search, authuser_id) VALUES ($1, $2)',
+            const { rows } = await postgres.query(
+                'INSERT INTO favorite_lists (search, authuser_id) VALUES ($1, $2) RETURNING *',
                 [search, id]
             );
-            res(createdFavorite);
+            res(rows[0]);
         })
     };
 
