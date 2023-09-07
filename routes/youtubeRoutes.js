@@ -2,7 +2,6 @@ require('dotenv').config();
 const router = require('express').Router();
 const UserControllers = require('../controllers/UserControllers.js');
 const validation = require('../helpers/validation.js')
-const postgres = require('../config/db.js');
 
 
 
@@ -29,9 +28,6 @@ router.get('/users', validation, async (req, res) => {
     try {
         const users = await UserControllers.allUsers();
         res.send(users);
-
-        // const users = await postgres.query('SELECT * FROM auth_users');
-        // res.send(users.rows);
 
     } catch (error) {
         res.json(error);
