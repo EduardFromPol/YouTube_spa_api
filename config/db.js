@@ -11,7 +11,7 @@ const pgDb = new Sequelize(
     'youtube_api_seq_user', 
     'CsNFVwiyeAcuMedjk0fkWEtWLuLvYGTy', 
     {
-        host: 'ep-bold-frost-03649591-pooler.us-east-1.postgres.vercel-storage.com',
+        host: 'dpg-cjsp7je3m8ac73erg5fg-a.oregon-postgres.render.com',
         dialect: 'postgres',
         dialectOptions: {
             ssl: {
