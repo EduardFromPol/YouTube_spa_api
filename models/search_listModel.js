@@ -1,23 +1,23 @@
 const pgDb = require('../config/db.js');
 const Auth = require('./authModel.js');
-const { DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 const SearchList = pgDb.define(
     'search_list',
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: Sequelize.INTEGER,
             primaryKey: true,
             allowNull: false,
             autoIncrement: true
         },
         search: {
-            type: DataTypes.STRING,
+            type: Sequelize.STRING,
             allowNull: false,
 
         },
         authuser_id: {
-            type: DataTypes.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull: false,
             require: true,
             references: {

@@ -1,4 +1,8 @@
+require('dotenv').config();
 const { SearchList } = require('../models/_models.js');
+
+// process.env.BASEAPIURL
+// process.env.YOUTUBEAPIKEY
 
 class SearchListServices {
 

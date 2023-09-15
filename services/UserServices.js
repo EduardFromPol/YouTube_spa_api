@@ -15,7 +15,7 @@ class UserServices {
         return new Promise(async (res, rej) => {
 
             Auth.findOne({ where: { login: login } }).then(data => {
-                res(data)
+                res(data);
             });
 
         });

@@ -24,6 +24,7 @@ router.get('/', validation, async (req, res) => {
 
         const { id } = req.userId;
         SearchListController.getList(id).then(data => res.send(data));
+        
     } catch (error) {
         res.json(error);
     };
