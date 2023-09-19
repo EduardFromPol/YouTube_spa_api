@@ -1,4 +1,4 @@
-const { Auth } = require('../models/_models.js');
+const { Auth, SearchList } = require('../models/_models.js');
 
 
 class UserServices {
@@ -33,6 +33,10 @@ class UserServices {
         return new Promise( async (req, res) => {
 
             Auth.destroy({ where: { id }}).then(result => res(result));
+            SearchList.destroy({ where: { id }}).then(deleteResult => {
+                console.log(`Search list was deleted with status ${deleteResult}`)
+            });
+            
 
         })
     }

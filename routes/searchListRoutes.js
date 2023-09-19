@@ -7,7 +7,7 @@ const validation = require('../helpers/validation.js');
  * @swagger
  * /api/searchList:
  *   get:
- *     summary: Get
+ *     summary: Get search list
  *     description: Get search list
  *     tags: [Search List]
  *     security:
@@ -35,7 +35,7 @@ router.get('/', validation, async (req, res) => {
  * @swagger
  * /api/searchList/create:
  *   post:
- *     summary: Create
+ *     summary: Create search list
  *     description: Create Search list
  *     tags: [Search List]
  *     security:
