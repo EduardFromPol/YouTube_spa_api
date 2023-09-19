@@ -6,12 +6,14 @@ const Sequelize = require('sequelize');
 // const pgDb = new Sequelize(process.env.POSTGRES_URL); // vercel db
 // const pgDb = new Sequelize(process.env.POSTGRES_RENDER_URL) // render db
 
+const { DBNAME, DBUSERNAME, DBPASSWORD, DBHOST } = process.env;
+
 const pgDb = new Sequelize(
-    'youtube_api_seq', 
-    'youtube_api_seq_user', 
-    'CsNFVwiyeAcuMedjk0fkWEtWLuLvYGTy', 
+    DBNAME, 
+    DBUSERNAME, 
+    DBPASSWORD, 
     {
-        host: 'dpg-cjsp7je3m8ac73erg5fg-a.oregon-postgres.render.com',
+        host: DBHOST,
         dialect: 'postgres',
         dialectOptions: {
             ssl: {
@@ -21,5 +23,24 @@ const pgDb = new Sequelize(
         }
     }
 );
+
+
+
+
+// const pgDb = new Sequelize(
+//     'youtube_api_seq', 
+//     'youtube_api_seq_user', 
+//     'CsNFVwiyeAcuMedjk0fkWEtWLuLvYGTy', 
+//     {
+//         host: 'dpg-cjsp7je3m8ac73erg5fg-a.oregon-postgres.render.com',
+//         dialect: 'postgres',
+//         dialectOptions: {
+//             ssl: {
+//                 require: true,
+//                 rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+//             }
+//         }
+//     }
+// );
 
 module.exports = pgDb;
