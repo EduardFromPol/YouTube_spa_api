@@ -1,13 +1,13 @@
 require('dotenv').config();
 const router = require('express').Router();
-const UserControllers = require('../controllers/UserControllers.js');
 const validation = require('../helpers/validation.js');
+const UserControllers = require('../controllers/UserControllers.js');
 const SearchListController = require('../controllers/SearchListController.js');
 const FavoritesController = require('../controllers/FavoritesController.js');
 
 
 // npm install axios
-const youtubeApiKey = 'AIzaSyCcicvMQVrDcHzTHUKaKaddIiofnh8P0f4';
+// const youtubeApiKey = 'AIzaSyCcicvMQVrDcHzTHUKaKaddIiofnh8P0f4';
 // const baseApiURL = '/...v3'
 // const baseApiURL = 'https://www.googleapis.com/youtube/v3';
 // youtube searchURL -->
@@ -16,7 +16,7 @@ const youtubeApiKey = 'AIzaSyCcicvMQVrDcHzTHUKaKaddIiofnh8P0f4';
 const { google } = require('googleapis');
 const youtube = google.youtube({
     version: 'v3',
-    auth: youtubeApiKey,
+    auth: process.env.YOUTUBEAPIKEY,
 });
 
 
@@ -39,8 +39,9 @@ const youtube = google.youtube({
 router.get('/users', async (req, res) => {
     try {
 
-        const users = await UserControllers.allUsers();
-        res.send(users);
+        UserControllers.allUsers().then(users => {
+            res.send(users);
+        });
 
     } catch (error) {
         res.json(error);
@@ -50,7 +51,7 @@ router.get('/users', async (req, res) => {
 
 /**
  * @swagger
- * /api/youtube/search:
+ * /api/youtube/search/{maxResult}:
  *   get:
  *     summary: Get Youtube video
  *     description: Get Youtube video
@@ -62,6 +63,10 @@ router.get('/users', async (req, res) => {
  *         in: query
  *         description: Search words
  *         required: true
+ *       - name: maxResult
+ *         in: path
+ *         description: Enter max result
+ *         require: true
  *     schema:
  *       type: string
  *     responses:
@@ -71,46 +76,49 @@ router.get('/users', async (req, res) => {
  *         description: Forbidden
  */
 
-router.get('/search', validation, async (req, res) => {
+
+router.get('/search/:maxResult', validation, async (req, res) => {
     try {
         const { q } = req.query;
         const { id } = req.userId;
-        const videuUrl = `https://www.youtube.com/`;
-
-        const obj = { search: q, authuser_id: id};
-
-        SearchListController.createList(obj).then(createdSearchList => {
-          return createdSearchList;
-        });
-
-        FavoritesController.createFavorite(obj).then(createdFavoriteList => {
-            return createdFavoriteList;
-        });
+        const { maxResult } = req.params;
 
         youtube.search.list({
             part: 'snippet',
             query: q,
             type: 'video',
+            maxResults: +maxResult
         }).then(response => {
 
             const { nextPageToken } = response.data;
-            const prevPageToken = response.data.prevPageToken ?? null; 
+            // const prevPageToken = response.data.prevPageToken ?? null; 
+            const { prevPageToken } = response.data; 
+
+            const obj = { search: q, authuser_id: id };
+            SearchListController.createList(obj).then(createdSearchList => {
+                return createdSearchList;
+            });
+    
+            FavoritesController.createFavorite(obj).then(createdFavoriteList => {
+                return createdFavoriteList;
+            });
+
             const { items } = response.data;
             const result = items.map(i => {
-              const { videoId } = i.id;
-              const { snippet } = i;
-              const { thumbnails, channelTitle, title } = snippet;
-              return { 
-                id: videoId, 
-                videoUrl: `${videuUrl}watch?v=${videoId}`, 
-                img: thumbnails, 
-                channel: channelTitle, 
-                title: title,
-                prev: prevPageToken,
-                next: nextPageToken
-              }
+                const { snippet } = i;
+                const { videoId } = i.id;
+                const { thumbnails, channelTitle, title } = snippet;
+
+                return { 
+                    id: videoId, 
+                    videoUrl: `${process.env.YOUTUBEURL}watch?v=${videoId}`, 
+                    img: thumbnails, 
+                    channel: channelTitle, 
+                    title: title,
+                    prev: prevPageToken,
+                    next: nextPageToken
+                };
             });
-            
             res.send(result);
 
 
@@ -136,9 +144,10 @@ router.get('/search', validation, async (req, res) => {
         });
     } catch (error) {
         res.json(error);
-        // next(error);
+        // next(error);  // ????
     };
 });
+
 
 
 

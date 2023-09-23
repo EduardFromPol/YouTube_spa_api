@@ -32,9 +32,13 @@ class UserServices {
     async deleteUser(id) {
         return new Promise( async (req, res) => {
 
-            Auth.destroy({ where: { id }}).then(result => res(result));
-            SearchList.destroy({ where: { id }}).then(deleteResult => {
-                console.log(`Search list was deleted with status ${deleteResult}`)
+            Auth.destroy({ where: { id }}).then(result => {
+                SearchList.destroy({ where: { id }}).then(deleteResult => {
+                    console.log(`Search list was deleted with status ${deleteResult}`)
+                    return deleteResult;
+                });
+                
+                res(result)
             });
             
 

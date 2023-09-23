@@ -14,6 +14,7 @@ const Favorites = pgDb.define(
         search: {
             type: Sequelize.STRING,
             allowNull: false,
+            require: true
         },
         authuser_id: {
             type: Sequelize.INTEGER,
