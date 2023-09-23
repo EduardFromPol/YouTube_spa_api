@@ -30,12 +30,19 @@ describe('GET', () => {
             .get('/api/youtube/users')
             .set('Authorization', 'Bearer invalid_token')
             .expect(403)
-        expect(response.text).toEqual('Forbidden')
-    })
+        expect(response.text).toEqual('Forbidden');
+    });
 });
 
 
 describe('POST', () => {
+
+    // this user was in Register test - 62 line
+    const user = {
+        "login": "test12",
+        "password": "testtest"
+    };
+
     it('Login', async () => {
         const user = {
             "login": "ibadt1",
@@ -52,10 +59,6 @@ describe('POST', () => {
 
 
     it('Register', async () => {
-        const user = {
-            "login": "test12",
-            "password": "testtest"
-        };
         await request(app)
             .post('/api/authorization/register')
             .send(user)
@@ -64,6 +67,17 @@ describe('POST', () => {
             .expect('Content-Type', /json/)
             .expect(200)
     });
+
+    // new test about create user if he was created
+    it('Register if user already created', async () => {
+        await request(app)
+            .post('/api/authorization/register')
+            .send(user)
+            .set('Authorization', `Bearer ${process.env.TOKEN}`)
+            .set('Access', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(400)
+    })
 
     it('Register without login or password', async () => {
         const user = {
@@ -86,5 +100,5 @@ describe('DELETE', () => {
             .set('Authorization', `Bearer ${process.env.TOKEN}`)
             .set('Access', 'application/json')
             .expect(200)
-    })
+    });
 })

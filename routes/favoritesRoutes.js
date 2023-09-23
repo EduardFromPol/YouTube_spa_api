@@ -7,8 +7,8 @@ const validation = require('../helpers/validation.js');
  * @swagger
  * /api/favorites:
  *   get:
- *     summary: Get all Favorites
- *     description: Get all Favorites
+ *     summary: Get all Favorite list
+ *     description: Get all Favorites list
  *     tags: [Favorites]
  *     security:
  *       - bearerAuth: []
@@ -33,8 +33,8 @@ router.get('/', validation, async (req, res) => {
  * @swagger
  * /api/favorites/create:
  *   post:
- *     summary: Create
- *     description: Create Favorites
+ *     summary: Create favorite list
+ *     description: Create Favorite list
  *     tags: [Favorites]
  *     security:
  *       - bearerAuth: []
@@ -59,9 +59,8 @@ router.post('/create', validation, async (req, res) => {
     try {
         const { search } = req.body;
         const { id } = req.userId;
-        // const obj = { search, authuser_id: id };
-        // FavoritesController.createFavorite(obj).then(data => res.send(data));
-        FavoritesController.createFavorite(search, id).then(data => res.send(data));
+        const obj = { search, authuser_id: id };
+        FavoritesController.createFavorite(obj).then(data => res.send(data));
     } catch (error) {
         res.json(error);
     }

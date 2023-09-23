@@ -8,9 +8,8 @@ const postgres = require('../config/db.js');
 class UserControllers {
 
     async allUsers() {
-        // const users = await UserServices.allUsers();
-        const { rows } = await postgres.query('SELECT * FROM auth_users');
-        return rows;
+        const users = await UserServices.allUsers();
+        return users;
     }
 
     async login( login, password ) {

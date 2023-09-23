@@ -7,8 +7,8 @@ class SearchListController {
         return searchList; 
     };
 
-    async createList( search, id ) {
-        const createdList = await SearchListServices.createList( search, id );
+    async createList( obj ) {
+        const createdList = await SearchListServices.createList( obj );
         return createdList;
     };
 

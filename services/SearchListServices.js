@@ -1,31 +1,24 @@
-const postgres = require('../config/db.js');
-// const { SearchList } = require('../models/_models.js');
+require('dotenv').config();
+const { SearchList } = require('../models/_models.js');
+
+// process.env.BASEAPIURL
+// process.env.YOUTUBEAPIKEY
 
 class SearchListServices {
 
     async getList(id) {
         return new Promise( async (res, rej) => {
 
-            // SearchList.findAll({ where: { authuser_id: id } }).then(data => res(data));
-            const { rows } = await postgres.query(
-                'SELECT * FROM search_lists WHERE authuser_id = $1', 
-                [id]
-            )
-            res(rows);
+            SearchList.findAll({ where: { authuser_id: id } }).then(data => res(data));
 
         });
     };
 
-    async createList( search, id ) {
+    async createList( obj ) {
         return new Promise( async (res, rej) => {
 
-            // SearchList.create(obj).then(data => res(data));
+            SearchList.create( obj ).then(data => res(data));
 
-            const { rows } = await postgres.query(
-                'INSERT INTO search_lists (search, authuser_id) VALUES ($1, $2) RETURNING *',
-                [search, id]
-            )
-            res(rows[0]);
         })
     };
     

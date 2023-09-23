@@ -1,26 +1,25 @@
+require('dotenv').config();
 const { Favorites } = require('../models/_models.js');
-const postgres = require('../config/db.js');
+
+// process.env.BASEAPIURL
+// process.env.YOUTUBEAPIKEY
+
 
 class FavoritesServices {
 
     async getAllFavorites() {
         return new Promise(async (res, rej) => {
 
-            // Favorites.findAll({ where: {}}).then(data => res(data));
-            const { rows } = await postgres.query('SELECT * FROM favorite_lists');
-            res(rows); 
+            Favorites.findAll({ where: {}}).then(data => res(data));
+
         })
     };
 
-    async createFavorite( search, id ) {
+    async createFavorite( obj ) {
         return new Promise(async (res, rej) => {
 
-            // Favorites.create(obj).then(data => res(data));
-            const { rows } = await postgres.query(
-                'INSERT INTO favorite_lists (search, authuser_id) VALUES ($1, $2) RETURNING *',
-                [search, id]
-            );
-            res(rows[0]);
+            Favorites.create(obj).then(data => res(data));
+
         })
     };
 

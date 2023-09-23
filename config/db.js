@@ -1,37 +1,46 @@
 require('dotenv').config();
-// const Sequelize = require('sequelize');
-const { Pool } = require('pg')
+const Sequelize = require('sequelize');
 
-// const pgDb = new Sequelize(
-//     'youtubespa', 
-//     'postgres', 
-//     'admin', 
-//     {
-//         host: 'localhost', 
-//         dialect: 'postgres',
-//     }
-// );
 
 // const pgDb = new Sequelize(process.env.POSTGRES_CONNECT_URL); // local db
 // const pgDb = new Sequelize(process.env.POSTGRES_URL); // vercel db
+// const pgDb = new Sequelize(process.env.POSTGRES_RENDER_URL) // render db
 
-// module.exports = pgDb;
+const { DBNAME, DBUSERNAME, DBPASSWORD, DBHOST } = process.env;
+
+const pgDb = new Sequelize(
+    DBNAME, 
+    DBUSERNAME, 
+    DBPASSWORD, 
+    {
+        host: DBHOST,
+        dialect: 'postgres',
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+            }
+        }
+    }
+);
 
 
-// const postgres = new Pool({
-//     user: 'postgres',
-//     password: 'admin',
-//     port: 5432,
-//     host: 'localhost',
-//     database: 'youtubespa'
-// });
-const postgres = new Pool({
-    connectionString: process.env.POSTGRES_URL + "?sslmode=require",
-});
 
-postgres.connect(err => {
-    if(err) throw err;
-    console.log('Postgres connected...');
-});
 
-module.exports = postgres;
+// const pgDb = new Sequelize(
+//     'youtube_api_seq', 
+//     'youtube_api_seq_user', 
+//     'CsNFVwiyeAcuMedjk0fkWEtWLuLvYGTy', 
+//     {
+//         host: 'dpg-cjsp7je3m8ac73erg5fg-a.oregon-postgres.render.com',
+//         dialect: 'postgres',
+//         dialectOptions: {
+//             ssl: {
+//                 require: true,
+//                 rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+//             }
+//         }
+//     }
+// );
+
+module.exports = pgDb;
