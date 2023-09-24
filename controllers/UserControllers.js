@@ -2,6 +2,7 @@ require('dotenv').config();
 const UserServices = require('../services/UserServices.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const postgres = require('../config/db.js');
 
 
 class UserControllers {
@@ -12,9 +13,10 @@ class UserControllers {
     }
 
     async login( login, password ) {
+
         const finderUser = await UserServices.findUserByLogin( login );
-        const id = finderUser.id;
         if(finderUser) {
+            const id = finderUser.id;
             const comparePass = await bcrypt.compare( password, finderUser.password );
             if( comparePass ) {
                 const token = jwt.sign({ id }, process.env.SECRET_ACCESS_TOKEN);
@@ -25,10 +27,12 @@ class UserControllers {
         } else { 
             return null;
         }
+
     };
 
     async register( login, password ) {
-        const finderUser = await UserServices.findUserByLogin( login );
+
+        const finderUser = await UserServices.findUserByLogin( login );      
         if(!finderUser) {
             const salt = await bcrypt.genSalt(10);
             const hashPass = await bcrypt.hash( password, salt );
@@ -38,6 +42,7 @@ class UserControllers {
             });
             return createdUser;
         } return null;
+        
     };
 
     async deleteUser( id ) {

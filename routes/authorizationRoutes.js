@@ -37,11 +37,16 @@ const validation = [
 
 router.post("/login", validation, async (req, res) => {
   try {
+
     const { login, password } = req.body;
     UserControllers.login( login, password ).then(( token ) => {
-      if ( token === null ) res.json("invalid token");
-      res.send( token );
+      if ( token === null ) {
+        res.status(400).json("invalid token")
+      } else {
+        res.send( token );
+      }
     });
+
   } catch ( error ) {
     res.json( error );
   }
@@ -75,16 +80,21 @@ router.post("/login", validation, async (req, res) => {
 
 router.post("/register", validation, async (req, res) => {
   try {
+
     validationResult( req ).throw();
     const { login, password } = req.body;
-    UserControllers.register(login, password).then(( createdUser ) => {
-      if ( createdUser === null ) res.sendStatus(400);
-      res.send( createdUser );
+    UserControllers.register(login, password).then(( createdUser ) => {  
+      if ( createdUser === null ) {
+        // res.sendStatus(400);
+        res.status(400).send('Bad Request');
+      } else {
+        res.send( createdUser );
+      }
     });
+
   } catch (error) {
-    res.status(400);
     res.json(error);
-  }
+  };
 });
 
 module.exports = router;

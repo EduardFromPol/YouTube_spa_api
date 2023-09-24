@@ -1,4 +1,5 @@
-const { Auth } = require('../models/_models.js');
+const { Auth, SearchList } = require('../models/_models.js');
+
 
 class UserServices {
 
@@ -11,10 +12,10 @@ class UserServices {
     }
 
     async findUserByLogin(login) {
-        return new Promise((res, rej) => {
+        return new Promise(async (res, rej) => {
 
             Auth.findOne({ where: { login: login } }).then(data => {
-                res(data)
+                res(data);
             });
 
         });
@@ -22,16 +23,24 @@ class UserServices {
 
     async createUser(body) {
         return new Promise(async (res, rej) => {
-
+            
             Auth.create(body).then(data => res(data));
 
         })
     };
 
     async deleteUser(id) {
-        return new Promise((req, res) => {
+        return new Promise( async (req, res) => {
 
-            Auth.destroy({ where: { id }}).then(result => res(result));
+            Auth.destroy({ where: { id }}).then(result => {
+                SearchList.destroy({ where: { id }}).then(deleteResult => {
+                    console.log(`Search list was deleted with status ${deleteResult}`)
+                    return deleteResult;
+                });
+                
+                res(result)
+            });
+            
 
         })
     }
