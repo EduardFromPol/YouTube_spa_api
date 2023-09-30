@@ -1,12 +1,12 @@
 const router = require("express").Router();
 const UserControllers = require("../controllers/UserControllers.js");
-const { check, validationResult } = require('express-validator');
+const { check } = require('express-validator');
 
 
 
 const validation = [
-  check('login', 'Invalid Login').isLength({ min: 5, max: 12 }),
-  check('password', 'Invalid Password').isLength({ min: 6, max: 20 })
+  check('login', 'Invalid Login').isLength({ min: 5, max: 20 }),
+  check('password', 'Invalid Password').isLength({ min: 5, max: 22 })
 ]
 
 
@@ -35,22 +35,7 @@ const validation = [
  *         description: Forbidden
  */
 
-router.post("/login", validation, async (req, res) => {
-  try {
-
-    const { login, password } = req.body;
-    UserControllers.login( login, password ).then(( token ) => {
-      if ( token === null ) {
-        res.status(400).json("invalid token")
-      } else {
-        res.send( token );
-      }
-    });
-
-  } catch ( error ) {
-    res.json( error );
-  }
-});
+router.post("/login", validation, UserControllers.login)
 
 
 /**
@@ -78,23 +63,8 @@ router.post("/login", validation, async (req, res) => {
  *         description: Bad Request
  */
 
-router.post("/register", validation, async (req, res) => {
-  try {
+router.post("/register", validation, UserControllers.register);
 
-    validationResult( req ).throw();
-    const { login, password } = req.body;
-    UserControllers.register(login, password).then(( createdUser ) => {  
-      if ( createdUser === null ) {
-        // res.sendStatus(400);
-        res.status(400).send('Bad Request');
-      } else {
-        res.send( createdUser );
-      }
-    });
 
-  } catch (error) {
-    res.json(error);
-  };
-});
 
 module.exports = router;

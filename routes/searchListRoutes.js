@@ -19,16 +19,7 @@ const validation = require('../helpers/validation.js');
  *         description: Forbidden
  */
 
-router.get('/', validation, async (req, res) => {
-    try {
-
-        const { id } = req.userId;
-        SearchListController.getList(id).then(data => res.send(data));
-        
-    } catch (error) {
-        res.json(error);
-    };
-});
+router.get('/', validation, SearchListController.getList);
 
 
 /**
@@ -57,15 +48,6 @@ router.get('/', validation, async (req, res) => {
  *         description: Forbidden
  */
 
-router.post('/create', validation, async (req, res) => {
-    try {
-        const { search } = req.body;
-        const { id } = req.userId;
-        const obj = { search, authuser_id: id};
-        SearchListController.createList(obj).then(data => res.send(data));
-    } catch (error) {
-        res.json(error);
-    }
-})
+router.post('/create', validation, SearchListController.createList)
 
 module.exports = router;

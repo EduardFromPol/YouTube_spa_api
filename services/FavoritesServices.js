@@ -1,9 +1,6 @@
 require('dotenv').config();
 const { Favorites } = require('../models/_models.js');
 
-// process.env.BASEAPIURL
-// process.env.YOUTUBEAPIKEY
-
 
 class FavoritesServices {
 
