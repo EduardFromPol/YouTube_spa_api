@@ -54,7 +54,9 @@ class UserControllers {
                     password: hashPass
                 });
                 res.send(createdUser);
-            } res.sendStatus(400);
+            } else {
+                res.sendStatus(400);
+            };
             
         } catch (error) {
             res.json(error);
