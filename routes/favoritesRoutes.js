@@ -19,14 +19,7 @@ const validation = require('../helpers/validation.js');
  *         description: Forbidden
  */
 
-router.get('/', validation, async (req, res) => {
-    try {
-        FavoritesController.getAllFavorites().then(data => res.send(data));
-
-    } catch (error) {
-        res.json(error);
-    };
-});
+router.get('/', validation, FavoritesController.getAllFavorites);
 
 
 /**
@@ -55,15 +48,6 @@ router.get('/', validation, async (req, res) => {
  *         description: Forbidden
  */
 
-router.post('/create', validation, async (req, res) => {
-    try {
-        const { search } = req.body;
-        const { id } = req.userId;
-        const obj = { search, authuser_id: id };
-        FavoritesController.createFavorite(obj).then(data => res.send(data));
-    } catch (error) {
-        res.json(error);
-    }
-})
+router.post('/create', validation, FavoritesController.createFavorite)
 
 module.exports = router;
