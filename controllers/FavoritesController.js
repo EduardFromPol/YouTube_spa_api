@@ -4,8 +4,8 @@ class FavoritesController {
     
     async getAllFavorites( req, res ) {
         try {
-
-            const favorites = await FavoritesServices.getAllFavorites();
+            const { id } = req.userId;
+            const favorites = await FavoritesServices.getAllFavorites(id);
             res.send(favorites);
             
         } catch (error) {

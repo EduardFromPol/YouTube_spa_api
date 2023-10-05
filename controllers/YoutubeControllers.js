@@ -27,8 +27,6 @@ class YoutubeControllers {
     
                 const obj = { search: q, authuser_id: id };
                 await SearchListServices.createList(obj);
-                
-                await FavoritesServices.createFavorite(obj);
 
                 const result = await YoutubeServices.createYoutubeResp(response)
                 res.send(result);
