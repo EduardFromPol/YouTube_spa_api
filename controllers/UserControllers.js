@@ -44,7 +44,6 @@ class UserControllers {
     async register( req, res ) {
         try {
             const { login, password } = req.body;
-
             const finderUser = await UserServices.findUserByLogin( login );      
             if(!finderUser) {
                 const salt = await bcrypt.genSalt(10);

@@ -8,25 +8,6 @@ const YoutubeControllers = require('../controllers/YoutubeControllers.js');
 
 /**
  * @swagger
- * /api/youtube/users:
- *   get:
- *     summary: Get all authorization users
- *     description: Get all users
- *     tags: [YoutubeSPA]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       '200':
- *         description: Seccess
- *       '403': 
- *         description: Forbidden
- */
-
-router.get('/users', UserControllers.allUsers);
-
-
-/**
- * @swagger
  * /api/youtube/search/{maxResult}:
  *   get:
  *     summary: Get Youtube video
@@ -53,24 +34,5 @@ router.get('/users', UserControllers.allUsers);
  */
 
 router.get('/search/:maxResult', validation, YoutubeControllers.searchYoutubeVideo);
-
-
-/**
- * @swagger
- * /api/youtube/deleteUser:
- *   delete:
- *     summary: Delete user which was login
- *     description: Delete user
- *     tags: [YoutubeSPA]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       '200':
- *         description: Seccess 
- *       '403':
- *         description: Forbidden
- */
-
-router.delete('/deleteUser', validation, UserControllers.deleteUser)
 
 module.exports = router;

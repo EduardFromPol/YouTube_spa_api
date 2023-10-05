@@ -4,10 +4,10 @@ const { Favorites } = require('../models/_models.js');
 
 class FavoritesServices {
 
-    async getAllFavorites() {
+    async getAllFavorites(id) {
         return new Promise(async (res, rej) => {
 
-            Favorites.findAll({ where: {}}).then(data => res(data));
+            Favorites.findAll({ where: {authuser_id: id}}).then(data => res(data));
 
         })
     };
